@@ -54,7 +54,7 @@ class VK_Universe {
   return json_decode(@file_get_contents('https://api.vk.com/method/'.$method.'?'.http_build_query($param)));
 
  }
-
+ 
 }
 
 ?>
