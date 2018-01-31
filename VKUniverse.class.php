@@ -23,12 +23,12 @@ class VKUniverse {
    $offset = $page * $count;
   
    $scan = $this->api('wall.get', [
-   	'owner_id' => $user_id,
-   	'offset' => $offset,
-   	'count' => $count,
-   	'filter' => $filter,
-   	'v' => self::VERSION_VK,
-   	'access_token' => $access_token
+    'owner_id' => $user_id,
+    'offset' => $offset,
+    'count' => $count,
+    'filter' => $filter,
+    'v' => self::VERSION_VK,
+    'access_token' => $access_token
    ]);
 
    foreach ($scan->response->items as $val) {
