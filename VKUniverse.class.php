@@ -45,7 +45,7 @@ class VK_Universe {
 
   } while ($scan->response->count > $offset + $count);
 
-  return json_encode(['likes' => $likes, 'comments' => $comments, 'reposts' => $reposts,'views' => $view, 'attachments' => $attachments]);
+  return json_encode(['likes' => $likes, 'comments' => $comments, 'reposts' => $reposts,'views' => $views, 'attachments' => $attachments]);
 
  }
 
