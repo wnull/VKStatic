@@ -5,7 +5,7 @@
  * @contacts vk.com/id19933, t.me/pirajog, github.com/wnull
  */
 
-class VK_Universe {
+class VKUniverse {
 
  const VERSION_VK = '5.71';
 
@@ -45,7 +45,7 @@ class VK_Universe {
 
   } while ($scan->response->count > $offset + $count);
 
-  return json_encode(['likes' => $likes, 'comments' => $comments, 'reposts' => $reposts,'views' => $views, 'attachments' => $attachments]);
+  return json_encode(['likes' => $likes, 'comments' => $comments, 'reposts' => $reposts, 'views' => $views, 'attachments' => $attachments]);
 
  }
 
@@ -54,7 +54,7 @@ class VK_Universe {
   return json_decode(@file_get_contents('https://api.vk.com/method/'.$method.'?'.http_build_query($param)));
 
  }
- 
+
 }
 
 ?>
