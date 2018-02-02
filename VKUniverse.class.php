@@ -50,13 +50,13 @@ class VKUniverse {
 
   } while ($scan->response->count > $offset + $count);
 
-  return json_encode([
+  return json_encode(['response' => [
    'likes' => $this->likes, 
    'comments' => $this->comments, 
    'reposts' => $this->reposts, 
    'views' => $this->views, 
    'attachments' => $this->attachments
-  ]);
+  ]]);
 
  }
 
