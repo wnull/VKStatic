@@ -9,11 +9,9 @@ class VKUniverse {
 
  const VERSION_VK = '5.71';
 
- public $likes, $comments, $views, $reposts;
+ public $likes = 0, $comments = 0, $views = 0, $reposts = 0, $attachments = 0;
 
  public function count_wall ($user_id, $filter, $access_token) {
-
-  // $filt = ($filter) ? $filter : 'all';
 
   $page = 0;
   $count = 100;
@@ -31,13 +29,20 @@ class VKUniverse {
     'access_token' => $access_token
    ]);
 
-   foreach ($scan->response->items as $val) {
+   if (isset($scan->error)) {
 
-    $likes += $val->likes->count;
-    $comments += $val->comments->count;
-    $reposts += $val->reposts->count;
-    $views += $val->views->count;
-    $attachments += count($val->attachments);
+    exit(json_encode(['error' => ['error_code' => $scan->error->error_code, 'error_msg' => $scan->error->error_msg]]));
+
+   }
+
+   foreach ($scan->response->items as $val) {
+     
+    $this->likes += $val->likes->count;
+    $this->comments += $val->comments->count;
+    $this->reposts += $val->reposts->count;
+
+    if (!empty($val->views)) $this->views += $val->views->count;
+    if (!empty($val->attachments)) $this->attachments += count($val->attachments);
 
    }
 
@@ -45,7 +50,13 @@ class VKUniverse {
 
   } while ($scan->response->count > $offset + $count);
 
-  return json_encode(['likes' => $likes, 'comments' => $comments, 'reposts' => $reposts, 'views' => $views, 'attachments' => $attachments]);
+  return json_encode([
+   'likes' => $this->likes, 
+   'comments' => $this->comments, 
+   'reposts' => $this->reposts, 
+   'views' => $this->views, 
+   'attachments' => $this->attachments
+  ]);
 
  }
 
