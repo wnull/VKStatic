@@ -36,11 +36,11 @@ class VKUniverse {
    }
 
    foreach ($scan->response->items as $val) {
-     
+
     $this->likes += $val->likes->count;
     $this->comments += $val->comments->count;
     $this->reposts += $val->reposts->count;
-
+    
     if (!empty($val->views)) $this->views += $val->views->count;
     if (!empty($val->attachments)) $this->attachments += count($val->attachments);
 
@@ -50,13 +50,15 @@ class VKUniverse {
 
   } while ($scan->response->count > $offset + $count);
 
-  return json_encode(['response' => [
-   'likes' => $this->likes, 
-   'comments' => $this->comments, 
-   'reposts' => $this->reposts, 
-   'views' => $this->views, 
-   'attachments' => $this->attachments
-  ]]);
+  return json_encode([
+   'response' => [
+    'likes' => $this->likes, 
+    'comments' => $this->comments, 
+    'reposts' => $this->reposts, 
+    'views' => $this->views, 
+    'attachments' => $this->attachments
+   ]
+  ]);
 
  }
 
