@@ -8,8 +8,9 @@
 class VKUniverse {
 
  private $vk_version = '5.71';
+ private $massiv = [];
 
- protected $likes = 0, $comments = 0, $views = 0, $reposts = 0, $attachments = 0;
+ public $likes = 0, $comments = 0, $views = 0, $reposts = 0, $attachments = 0;
 
  public function count_wall ($user_id, $filter, $access_token) {
 
@@ -35,7 +36,7 @@ class VKUniverse {
 
    }
 
-   foreach ($scan->response->items as $val) {
+   foreach ($scan->response->items as $key => $val) {
      
     $this->likes += $val->likes->count;
     $this->comments += $val->comments->count;
@@ -44,19 +45,26 @@ class VKUniverse {
     if (!empty($val->views)) $this->views += $val->views->count;
     if (!empty($val->attachments)) $this->attachments += count($val->attachments);
 
+    if (!empty($val->attachments)) foreach ($val->attachments as $keys => $value) array_push($this->massiv, $value->type);
+
    }
 
    $page++;
 
   } while ($scan->response->count > $offset + $count);
 
-  return json_encode(['response' => [
-   'likes' => $this->likes, 
-   'comments' => $this->comments, 
-   'reposts' => $this->reposts, 
-   'views' => $this->views, 
-   'attachments' => $this->attachments
-  ]]);
+  return json_encode([
+   'response' => [
+    'likes' => $this->likes, 
+    'comments' => $this->comments, 
+    'reposts' => $this->reposts, 
+    'views' => $this->views, 
+    'attachments' => [
+     'count' => $this->attachments, 
+     'type' => array_count_values($this->massiv)
+    ]
+   ]
+  ]);
 
  }
 
