@@ -1,5 +1,6 @@
-# VK_Universe
-Class for VK for wall scanning
+# VK_Universe 
+* Version: 3
+* Last update: 06 Feb 2018
 ## Settings and start
 ``` php
 require 'VKUniverse.class.php';
