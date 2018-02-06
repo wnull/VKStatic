@@ -2,7 +2,7 @@
 Class for VK for wall scanning
 ## Settings and start
 ``` php
-include 'VKUniverse.class.php';
+require_once  'VKUniverse.class.php';
 
 $access_token = 'user_token'; // access_token user
 $user_id = 1; // id wall
