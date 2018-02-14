@@ -75,7 +75,6 @@ class VKUniverse {
   return json_decode($this->curl($this->link.'/'.$method, ['post' => $param]));
  }
 
-
  protected function curl ($url, $params = null) { 
 
   $ch = curl_init();
