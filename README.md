@@ -1,6 +1,6 @@
 # VK_Universe 
-* Version: 3
-* Last update: 06 Feb 2018
+* Version: 3.1
+* Last update: 14 Feb 2018
 ## Settings and start
 ``` php
 require 'VKUniverse.class.php';
@@ -44,8 +44,11 @@ The result will be given in json format. On the example of the statistics of the
 }
 
 ```
-
-
+## Last changes 
+<b> from 14 Feb 2018</b>
+* Replacing the api function
+* Adding the cURL function
+* Reducing he execution time of the script
 
 ## License and Authorship
 
