@@ -1,16 +1,23 @@
 # VK_Universe 
-* Version: 3.1
-* Last update: 14 Feb 2018
+* Version: 3.2
+* Last update: 16 Feb 2018
 ## Settings and start
 ``` php
 require 'VKUniverse.class.php';
 
-$access_token = 'user_token'; // access_token user
-$user_id = 1; // id wall
+try {
 
-$foot = (new VKUniverse)->count_wall($user_id, 'owner', $access_token); // all || owner [ posts ]
-echo $foot;
+ $access_token = 'user_token'; 
+ $user_id = 1; 
 
+ $foot = (new VKUniverse)->count_wall($user_id, 'owner', $access_token); // all || owner [ posts ]
+ var_dump(json_decode($foot));
+
+} catch (Exception $e) {
+
+ echo 'Error: '.$e->getMessage();
+
+}
 ```
 ## The result of the script execution
 
@@ -45,10 +52,9 @@ The result will be given in json format. On the example of the statistics of the
 
 ```
 ## Last changes 
-<b> from 14 Feb 2018</b>
-* Replacing the api function
-* Adding the cURL function
-* Reducing he execution time of the script
+<b> from 16 Feb 2018</b>
+* Added caching (15 min)
+* Exceptions added
 
 ## License and Authorship
 
