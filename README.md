@@ -56,6 +56,8 @@ The result will be given in json format. On the example of the statistics of the
 <b> from 16 Feb 2018</b>
 * Added caching (15 min)
 * Exceptions added
+<hr>
+* Added a script to clean the directory with the cache (clean.php)
 
 ## License and Authorship
 
