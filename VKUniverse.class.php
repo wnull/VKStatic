@@ -15,59 +15,77 @@ class VKUniverse {
 
  public function count_wall ($user_id, $filter, $access_token) {
 
-  do {
+  $file_cache = 'tmp/'.$user_id.'.json';
+    
+  if (file_exists($file_cache) && filemtime($file_cache) > time() - 900) {
 
-   $offset = $this->page * $this->count;
-  
-   $scan = $this->api('wall.get', [
-    'owner_id' => $user_id,
-    'offset' => $offset,
-    'count' => $this->count,
-    'filter' => $filter,
-    'v' => $this->vk_version,
-    'access_token' => $access_token
-   ]);
+   $data = file_get_contents($file_cache);
 
-   if (isset($scan->error)){
-    exit(['error' => ['error_code' => $scan->error->error_code, 'error_msg' => $scan->error->error_msg]]);
-   }
+  } else {
+ 
+   do { 
 
-   foreach ($scan->response->items as $key => $val) {
-     
-    $this->likes += $val->likes->count;
-    $this->comments += $val->comments->count;
-    $this->reposts += $val->reposts->count;
+    $offset = $this->page * $this->count;
+   
+    $scan = $this->api('wall.get', [
+     'owner_id' => $user_id,
+     'offset' => $offset,
+     'count' => $this->count,
+     'filter' => $filter,
+     'v' => $this->vk_version,
+     'access_token' => $access_token
+    ]); 
+ 
 
-    if (!empty($val->views)) {
-     $this->views += $val->views->count;
-    }
+    if (isset($scan->error)) {
+     throw new Exception($scan->error->error_msg);
+    } 
 
-    if (!empty($val->attachments)) {
-     $this->attachments += count($val->attachments);
-    }
+    foreach ($scan->response->items as $key => $val) {
+      
+     $this->likes += $val->likes->count;
+     $this->comments += $val->comments->count;
+     $this->reposts += $val->reposts->count; 
 
-    if (!empty($val->attachments)) {
-     foreach ($val->attachments as $keys => $value) array_push($this->array, $value->type);
-    }
+     if (!empty($val->views)) {
+      $this->views += $val->views->count;
+     } 
 
-   }
+     if (!empty($val->attachments)) {
+      $this->attachments += count($val->attachments);
+     } 
 
-   $this->page++;
+     if (!empty($val->attachments)) {
+      foreach ($val->attachments as $keys => $value) array_push($this->array, $value->type);
+     } 
 
-  } while ($scan->response->count > $offset + $this->count);
+    } 
 
-  return [
-   'response' => [
-    'likes' => $this->likes, 
-    'comments' => $this->comments, 
-    'reposts' => $this->reposts, 
-    'views' => $this->views, 
-    'attachments' => [
-     'count' => $this->attachments, 
-     'type' => array_count_values($this->array)
+    $this->page++; 
+
+   } while ($scan->response->count > $offset + $this->count); 
+
+   date_default_timezone_set('Europe/Moscow');
+
+   $data = json_encode([
+    'response' => [
+     'update' => date('H:i'),
+     'likes' => $this->likes, 
+     'comments' => $this->comments, 
+     'reposts' => $this->reposts, 
+     'views' => $this->views, 
+     'attachments' => [
+      'count' => $this->attachments, 
+      'type' => array_count_values($this->array)
+     ]
     ]
-   ]
-  ];
+   ], JSON_UNESCAPED_UNICODE);
+
+   file_put_contents($file_cache, $data, LOCK_EX);
+
+  }
+
+  return $data;
 
  }
 
