@@ -1,6 +1,8 @@
-# VK_Universe 
-* Version: 3.2
-* Last update: 16 Feb 2018
+
+#   VK_Universe 
+
+<img src="https://img.shields.io/badge/version-3.2-red.svg"> <img src="https://img.shields.io/badge/php-%3E5.4-blue.svg"> <br>
+* Last update: 16 Feb 2018 
 ## Settings and start
 ``` php
 require 'VKUniverse.class.php';
