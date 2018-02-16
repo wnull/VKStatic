@@ -1,8 +1,9 @@
 
-#   VK_Universe 
+#   VK_Universe
 
-<img src="https://img.shields.io/badge/version-3.2-red.svg"> <img src="https://img.shields.io/badge/php-%3E5.4-blue.svg"> <br>
-* Last update: 16 Feb 2018 
+Free library for scanning the wall VK
+
+<img src="https://img.shields.io/badge/version-3.2-red.svg"> <img src="https://img.shields.io/badge/php-%3E5.4-blue.svg">  <img src="https://img.shields.io/badge/last%20update-16%20feb%202k18-blue.svg">
 ## Settings and start
 ``` php
 require 'VKUniverse.class.php';
