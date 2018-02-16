@@ -26,10 +26,11 @@ The result will be given in json format. On the example of the statistics of the
 {
   "response": 
   {
-    "likes": 20056370,
-    "comments": 1781770,
-    "reposts": 906104,
-    "views": 93833891,
+    "update": "12:54",
+    "likes": 20060612,
+    "comments": 1790532,
+    "reposts": 905430,
+    "views": 94388476,
     "attachments": 
     {
       "count": 267,
