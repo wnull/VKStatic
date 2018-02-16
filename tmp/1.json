@@ -1,1 +1,27 @@
-{"response":{"update":"12:54","likes":20060612,"comments":1790532,"reposts":905430,"views":94388476,"attachments":{"count":267,"type":{"video":4,"link":29,"photo":210,"doc":10,"poll":4,"photos_list":1,"page":4,"album":1,"note":3,"graffiti":1}}}}
+{
+  "response": 
+  {
+    "update": "17:53",
+    "likes": 20060809,
+    "comments": 1790866,
+    "reposts": 905423,
+    "views": 94413435,
+    "attachments": 
+    {
+      "count": 267,
+      "type": 
+      {
+        "video": 4,
+        "link": 29,
+        "photo": 210,
+        "doc": 10,
+        "poll": 4,
+        "photos_list": 1,
+        "page": 4,
+        "album": 1,
+        "note": 3,
+        "graffiti": 1
+      }
+    }
+  }
+}
