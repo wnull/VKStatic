@@ -3,7 +3,7 @@
 
 Free library for scanning the wall VK
 
-<img src="https://img.shields.io/badge/version-3.2-red.svg"> <img src="https://img.shields.io/badge/php-%3E5.4-blue.svg">  <img src="https://img.shields.io/badge/update-16.02.2018-blue.svg">
+<img src="https://img.shields.io/badge/version-3.2-red.svg"> <img src="https://img.shields.io/badge/php-%3E5.4-blue.svg">  <img src="https://img.shields.io/badge/update-16.02.2018-4a76a8.svg">
 ## Settings and start
 ``` php
 require 'VKUniverse.class.php';
