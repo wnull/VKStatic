@@ -25,12 +25,12 @@ class VK_Universe
 	public	$time_cash = 900;
 
 	public	$likes = 0,
-			$comments = 0,
-			$views = 0,
-			$reposts = 0,
-			$attachments = 0,
-			$count = 100,
-			$page = 0;
+		$comments = 0,
+		$views = 0,
+		$reposts = 0,
+		$attachments = 0,
+		$count = 100,
+		$page = 0;
 
 	public function __construct ($data)
 	{
