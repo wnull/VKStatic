@@ -3,25 +3,37 @@
 
 Free library for scanning the wall VK
 
-<img src="https://img.shields.io/badge/version-3.2-red.svg"> <img src="https://img.shields.io/badge/php-%3E5.4-blue.svg">  <img src="https://img.shields.io/badge/update-16.02.2018-4a76a8.svg">
+<img src="https://img.shields.io/badge/version-3.2-red.svg"> <img src="https://img.shields.io/badge/php-%3E5.4-blue.svg">  <img src="https://img.shields.io/badge/update-10 Mar 2018-4a76a8.svg">
 ## Settings and start
 ``` php
 require 'VKUniverse.class.php';
 
-try {
+try 
+{
+	$data['access_token'] = '';
+	$data['owner_id'] = '';
+	$data['filter'] = 'all';
+	$data['tmp'] = '';
+	$data['time_cash'] = 900;
 
- $access_token = 'user_token'; 
- $user_id = 1; 
+	$vk = (new VK_Universe($data))->stats();
 
- $foot = (new VKUniverse)->count_wall($user_id, 'owner', $access_token); // all || owner [ posts ]
- var_dump(json_decode($foot));
-
-} catch (Exception $e) {
-
- echo 'Error: '.$e->getMessage();
-
+	echo $vk;
 }
+catch (Exception $e)
+{
+	exit($e->getMessage());
+}
+
 ```
+## Settings
+
+* access_token - required parameter
+* ownder_id - optional parameter, if not specify, the token id will be used
+* filter - optional parameter, default - all (allowable values ALL or OWNER ])
+* tmp - optional parameter, cache write directory, default directory TMP 
+* time_cash - optional parameter, cache storage time [seconds], default 900 ( 5 min )
+
 ## The result of the script execution
 
 The result will be given in json format. On the example of the statistics of the wall of Paul Durov
@@ -55,14 +67,8 @@ The result will be given in json format. On the example of the statistics of the
 }
 
 ```
-## Last changes 
-<b> from 16 Feb 2018</b> <small>upd 17:50 MSK</small>
-* Added caching (15 min)
-* Exceptions added
-* Added a script to clean the directory with the cache (clean.php)
-
 ## License and Authorship
 
-MIT license, all rights belong to the author of the code <a target="_blank" href="https://vk.com/wnull">Vasily Pirajog</a>
+MIT license, all rights belong to the author of the code <a target="_blank" href="https://vk.com/wnull">Vasily Pirajog</a> or e-mail: wlinkin@yandex.ru
 
 <h4>Allowed free use with copyright notice!</h4>
