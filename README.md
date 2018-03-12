@@ -3,7 +3,9 @@
 
 Free library for scanning the wall VK
 
-<img src="https://img.shields.io/badge/version-3.2-red.svg"> <img src="https://img.shields.io/badge/php-%3E5.4-blue.svg">  <img src="https://img.shields.io/badge/update-10 Mar 2018-4a76a8.svg">
+<img src="https://img.shields.io/badge/version-3.5-red.svg"> <br>
+<img src="https://img.shields.io/badge/php-7-blue.svg"> <br> 
+<img src="https://img.shields.io/badge/update-10 Mar 2018-4a76a8.svg">
 ## Settings and start
 ``` php
 require 'VKUniverse.class.php';
@@ -41,7 +43,6 @@ The result will be given in json format. On the example of the statistics of the
 {
   "response": 
   {
-    "update": "12:54",
     "likes": 20060612,
     "comments": 1790532,
     "reposts": 905430,
