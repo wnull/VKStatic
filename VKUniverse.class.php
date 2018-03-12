@@ -6,7 +6,7 @@
  * @author     Vasily Pirajog <wlinkin@yandex.ru> | github.com/wnull
  * @copyright  2017-2018
  * @license    MIT
- * @version    Release: 3.1
+ * @version    Release: 3.5
  * @link       github.com/wnull/VK_Universe
  * @since      Class available since Release 2.5
  *
@@ -174,7 +174,6 @@ class VK_Universe
 		}
 
 		$con = curl_exec($ch);
-
 		curl_close($ch);
 
 		return $con;
