@@ -10,14 +10,14 @@
 class VKStatic
 {
 
-	protected $attachments_db = [];
+	protected  $attachments_db = [];
 
-	public $owner_id,
+	public     $owner_id,
 		   $filter,
 		   $version,
 		   $access_token;
 
-	public $likes = 0,
+	public     $likes = 0,
 		   $comments = 0,
 		   $views = 0,
 		   $reposts = 0,
