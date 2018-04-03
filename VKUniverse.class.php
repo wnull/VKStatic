@@ -1,44 +1,36 @@
 <?php
 
 /**
- * Class for scanning the wall in VKontakte
- *
- * @author     Vasily Pirajog <wlinkin@yandex.ru> | github.com/wnull
- * @copyright  2017-2018
- * @license    MIT
- * @version    Release: 3.5
- * @link       github.com/wnull/VK_Universe
- * @since      Class available since Release 2.5
- *
+ * @author 		Vasily Pirajog  <wlinlin@yandex.ru>
+ * @version 	4.0
+ * @link 		gihtub.com/wnull
+ * @license 	MIT
  */
 
-class VK_Universe
+class VKStatic
 {
-	public	$link = 'https://api.vk.com/method/';
-	public	$vk_version = '5.71';
-	public	$type_array = [];
 
-	public	$filter = 'all';
-	public	$tmp = 'tmp';
-	public	$owner_id = 0;
-	public	$access_token;
-	public	$time_cash = 900;
+	protected $attachments_db = [];
 
-	public	$likes = 0,
-		$comments = 0,
-		$views = 0,
-		$reposts = 0,
-		$attachments = 0,
-		$count = 100,
-		$page = 0;
+	public $owner_id,
+		   $filter,
+		   $version,
+		   $access_token;
+
+	public $likes = 0,
+		   $comments = 0,
+		   $views = 0,
+		   $reposts = 0,
+		   $attachments = 0,
+		   $count = 100,
+		   $page = 0;
 
 	public function __construct ($data)
 	{
 		if (!empty($data))
 		{
 			$this->access_token = ($data['access_token']) ? $data['access_token'] : '';
-			$this->time_cash = ($data['time_cash']) ? $data['time_cash'] : $this->time_cash;
-			$this->tmp = ($data['tmp']) ? $data['tmp'] : $this->tmp;
+			$this->version = (isset($data['v'])) ? $data['v'] : '5.73';
 
 			if ($data['owner_id'])
 			{
@@ -46,137 +38,129 @@ class VK_Universe
 			}
 			else
 			{
-				$self = $this->vk_api('users.get', [
-					'access_token' => $this->access_token,
-					'v' => $this->vk_version
-				]);
+				$self = $this->query('users.get', []);
 
 				$this->owner_id = $self->response[0]->id;
 			}
 
-			$this->filter = $data['filter'] ? ($data['filter']) : $this->filter;
+			$this->filter = (isset($data['filter'])) ? $data['filter'] : 'all';
 		}
 
-		$checkout = $this->vk_api('users.get', [
-			'access_token' => $this->access_token,
-			'v' => $this->vk_version
-		]);
+		$checkout = $this->query('users.get', []);
 
-		if ($checkout->error)
+		if (isset($checkout->error))
 		{
-			throw new Exception($checkout->error->error_msg);
+			throw new \Exception($checkout->error->error_msg);
 		}
+
 	}
 
-	public function stats ()
+
+	public function wall_scan ()
 	{
-		$file_cache = $this->tmp.'/'.$this->owner_id.'.json';
-
-		if (file_exists($file_cache) && filemtime($file_cache) > time() - $this->time_cash)
+		do
 		{
-			$data = file_get_contents($file_cache);
-		}
-		else
-		{
-			do
-			{
-				$offset = $this->page * $this->count;
+			$offset = $this->page * $this->count;
 
-				$wall = $this->vk_api('wall.get', [
-					'owner_id' => $owner_id,
-					'offset' => $offset,
-					'count' => $this->count,
-					'filter' => $filter,
-					'v' => $this->vk_version,
-					'access_token' => $this->access_token
-				]);
-
-				if (isset($wall->error))
-				{
-					throw new Exception($wall->error->error_msg);
-				}
-
-				foreach ($wall->response->items as $key => $val)
-				{
-					$this->likes += $val->likes->count;
-					$this->comments += $val->comments->count;
-					$this->reposts += $val->reposts->count;
-
-					if (!empty($val->views) || !empty($val->attachments))
-					{
-						$this->views += $val->views->count;
-						$this->attachments += count($val->attachments);
-
-						foreach ($val->attachments as $keys => $value)
-						{
-							array_push($this->type_array, $value->type);
-						}
-					}
-				}
-
-				$this->page++;
-
-			}
-			while ($wall->response->count > $offset + $this->count);
-				
-			$data = $this->build_view([
-				'response' => [
-					'likes' => $this->likes,
-					'comments' => $this->comments,
-					'reposts' => $this->reposts,
-					'views' => $this->views,
-					'attachments' => [
-						'count' => $this->attachments,
-						'type' => array_count_values($this->type_array)
-					]
-				]
+			$wall = $this->query('wall.get', [
+				'owner_id' => $this->owner_id,
+				'offset' => $offset,
+				'count' => $this->count,
+				'filter' => $this->filter,
+				'v' => '5.73'
 			]);
 
-			file_put_contents($file_cache, $data, LOCK_EX);
-		}
+			if (isset($wall->error))
+			{
+				throw new \Exception($wall->error->error_msg);
+			}
 
-		return $data;
+			foreach ($wall->response->items as $key => $val)
+			{
+				$this->likes += $val->likes->count;
+				$this->comments += $val->comments->count;
+				$this->reposts += $val->reposts->count;
+
+				if (!empty($val->views))
+				{
+					$this->views += $val->views->count;
+				}
+
+				if (!empty($val->attachments))
+				{
+					$this->attachments += count($val->attachments);
+
+					foreach ($val->attachments as $keys => $value)
+					{
+						array_push($this->attachments_db, $value->type);
+					}
+				}
+			}
+
+			$this->page++;
+
+		}
+		while ($wall->response->count > $offset + $this->count);
+				
+		$data = [
+			'response' => [
+				'likes' => $this->likes,
+				'comments' => $this->comments,
+				'reposts' => $this->reposts,
+				'views' => $this->views,
+				'attachments' => [
+					'count' => $this->attachments,
+					'type' => array_count_values($this->attachments_db)
+				]
+			]
+		];
+
+		return json_encode($data);
 	}
 
 
-	protected function vk_api ($method, $params)
+	protected function query ($method, $params)
 	{
-		$tr = $this->curl($this->link.'/'.$method, [
+		$params['v'] = $this->version;
+		$params['access_token'] = $this->access_token;
+
+		$data = $this->curl([
+			'url' => 'https://api.vk.com/method/' . $method,
 			'post/build' => $params
 		]);
 
-		return ($tr) ? json_decode($tr) : false;
+		return json_decode($data);
 	}
 
 
-	protected function build_view ($data)
+	protected function curl ($data)
 	{
-		return ($data) ? json_encode($data) : false;
-	}
-
-
-	protected function curl ($url, $params)
-	{
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
-
-		if (isset($params['post/build']))
+		if (!empty($data['url']))
 		{
-			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params['post/build']));
+			$ch = curl_init();
+
+			curl_setopt($ch, CURLOPT_URL, $data['url']);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+			if (isset($data['post']) || isset($data['post/build']))
+			{
+				curl_setopt($ch, CURLOPT_POST, true);
+				
+				if (isset($data['post']))
+				{
+					curl_setopt($ch, CURLOPT_POSTFIELDS, $data['post']);
+				}
+				else
+				{
+					curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data['post/build']));
+				}
+			}
+
+			$body = curl_exec($ch);
+			curl_close($ch);
+
+			return $body;
 		}
-
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-		if (isset($params['headers']))
-		{
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $params['headers']);
-		}
-
-		$con = curl_exec($ch);
-		curl_close($ch);
-
-		return $con;
 	}
 
 }
