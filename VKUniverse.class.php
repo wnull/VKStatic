@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @author		Vasily Pirajog  <wlinlin@yandex.ru>
- * @version 	4.0
- * @link		gihtub.com/wnull
- * @license 	MIT
+ * @author   Vasily Pirajog  <wlinlin@yandex.ru>
+ * @version  4.0
+ * @link     gihtub.com/wnull
+ * @license  MIT
  */
 
 class VKStatic
