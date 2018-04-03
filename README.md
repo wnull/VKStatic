@@ -1,5 +1,5 @@
 
-#   VK_Universe
+#   VKStatic class
 
 Free library for scanning the wall VK
 
@@ -12,19 +12,22 @@ require 'VKUniverse.class.php';
 
 try 
 {
-	$data['access_token'] = '';
-	$data['owner_id'] = '';
+	// required parameters
+	$data['access_token'] = 'token';
+	
+	// optinal parameters
+	$data['owner_id'] = 19933;
 	$data['filter'] = 'all';
-	$data['tmp'] = '';
-	$data['time_cash'] = 900;
-
-	$vk = (new VK_Universe($data))->stats();
+	$data['v'] = '5.73';
+	
+	$vk = (new VKStatic($data))->wall_scan();
 
 	echo $vk;
 }
-catch (Exception $e)
+catch (\Exception $e)
 {
-	exit($e->getMessage());
+	echo $e->getMessage();
+	exit();
 }
 
 ```
@@ -33,8 +36,6 @@ catch (Exception $e)
 * access_token - required parameter
 * ownder_id - optional parameter, if not specify, the token id will be used
 * filter - optional parameter, default - all (allowable values ALL or OWNER ])
-* tmp - optional parameter, cache write directory, default directory TMP 
-* time_cash - optional parameter, cache storage time [seconds], default 900 ( 5 min )
 
 ## The result of the script execution
 
