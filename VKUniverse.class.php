@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author   Vasily Pirajog  <wlinlin@yandex.ru>
+ * @author   Vasily Pirajog  <wlinlkin@yandex.ru>
  * @version  4.0
  * @link     gihtub.com/wnull
  * @license  MIT
