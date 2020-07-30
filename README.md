@@ -1,9 +1,8 @@
 
-#   VKStatic class
+#   VKStatic class <img src="https://img.shields.io/badge/version-4-red.svg"> <img src="https://img.shields.io/badge/php-7-blue.svg"> <img src="https://img.shields.io/badge/update-10 Apr 2018-4a76a8.svg">
+ 
+Simply script for scanning the wall VK
 
-Free library for scanning the wall VK
-
-<img src="https://img.shields.io/badge/version-4-red.svg"> <img src="https://img.shields.io/badge/php-7-blue.svg"> <img src="https://img.shields.io/badge/update-10 Apr 2018-4a76a8.svg">
 ## Settings and start
 ``` php
 require 'VKStatic.class.php';
@@ -35,10 +34,11 @@ catch (\Exception $e)
 * ownder_id - optional parameter, if not specify, the token id will be used
 * filter - optional parameter, default - all (allowable values ALL or OWNER ])
 
-## The result of the script execution
+## The result
 
-The result will be given in json format. On the example of the statistics of the wall of Paul Durov
-``` 
+The result will be given in json format. On the example of the statistics of the wall of Pavel Durov
+
+```json
 {
   "response": 
   {
@@ -67,8 +67,6 @@ The result will be given in json format. On the example of the statistics of the
 }
 
 ```
-## License and Authorship
+## License
 
-MIT license, all rights belong to the author of the code <a target="_blank" href="https://vk.com/wnull">Vasily Pirajog</a> or e-mail: wlinkin@yandex.ru
-
-<h4>Allowed free use with copyright notice!</h4>
+This library is licensed under the [MIT License](https://github.com/wnull/VKStatic/blob/master/LICENSE).
